@@ -55,7 +55,7 @@
 <v t="leo.20170710022054.1"><vh>可以另建節點存放 markdown 目錄下的 md 檔案</vh></v>
 <v t="leo.20170710022041.1"><vh>@path markdown</vh>
 <v t="leo.20180115115910.1"><vh>2021</vh>
-<v t="leo.20180423103639.1"><vh>2021 Fall CD 課程</vh>
+<v t="leo.20180423103639.1"><vh>2021 Spring CD 課程</vh>
 <v t="leo.20180423103656.1"><vh>@clean 20210227.md</vh>
 <v t="leo.20210227144621.1"><vh>newHeadline</vh></v>
 </v>
@@ -92,11 +92,11 @@ g.es("admin pelican Github 執行完畢")
 <t tx="leo.20180423103639.1"></t>
 <t tx="leo.20180423103656.1">@language md
 ---
-Title: 2021 Fall CD 課程
+Title: 2021 Spring CD 課程
 Date: 2021-02-27 14:50
 Category: Misc
-Tags: 2021FallCD
-Slug: 2021-Fall-Intro-to-computer-programming-1
+Tags: 2021SpringCD
+Slug: 2021-Spring-Intro-to-computer-programming-1
 Author: 40823245
 ---
 
