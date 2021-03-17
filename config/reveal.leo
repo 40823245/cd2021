@@ -209,11 +209,12 @@ vertical: body pane on the botton</t>
 &lt;div class="slides"&gt;
     @others
 &lt;/div&gt;</t>
-<t tx="leo.20200818170328.1">&lt;section&gt;
-    
-    &lt;h3&gt;協同產品設計實習
+<t tx="leo.20200818170328.1"> &lt;section data-transition="slide" data-background-transition="convex"&gt;
+            &lt;section data-transition="slide" data-background="#0000CD" data-background-transition="convex"&gt;
+ &lt;h3&gt;協同產品設計實習
     40823245 cd2021&lt;/h3&gt;
-&lt;/section&gt;
+ &lt;/section&gt;  
+
 
 </t>
 <t tx="leo.20200818170535.1">&lt;section&gt;
