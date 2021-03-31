@@ -19,7 +19,7 @@
 <v t="leo.20200818170041.1"><vh>reveal div</vh>
 <v t="leo.20200818170222.1"><vh>slides div</vh>
 <v t="leo.20200818170328.1"><vh>封面投影片</vh>
-<v t="leo.20210313110016.1"><vh>newHeadline</vh></v>
+<v t="leo.20210331221120.1"><vh>投影幕封面-1</vh></v>
 </v>
 <v t="leo.20200818170535.1"><vh>slide 2</vh></v>
 <v t="leo.20200818170636.1"><vh>slide3</vh>
@@ -209,13 +209,10 @@ vertical: body pane on the botton</t>
 &lt;div class="slides"&gt;
     @others
 &lt;/div&gt;</t>
-<t tx="leo.20200818170328.1"> &lt;section data-transition="slide" data-background-transition="convex"&gt;
-            &lt;section data-transition="slide" data-background="#0000CD" data-background-transition="convex"&gt;
- &lt;h3&gt;協同產品設計實習
-    40823245 cd2021&lt;/h3&gt;
- &lt;/section&gt;  
-
-
+<t tx="leo.20200818170328.1">&lt;!-- Example of nested vertical slides --&gt;
+&lt;section data-transition="slide" data-background-transition="convex"&gt;
+     @others
+&lt;/section&gt;
 </t>
 <t tx="leo.20200818170535.1">&lt;section&gt;
     &lt;h2&gt;Hello There&lt;/h2&gt;
@@ -647,6 +644,14 @@ console.log( '"customevent" has fired' );
         - &lt;a href="https://github.com/hakimel/reveal.js"&gt;Source code &amp;amp; documentation&lt;/a&gt;
     &lt;/p&gt;
 &lt;/section&gt;</t>
-<t tx="leo.20210313110016.1"></t>
+<t tx="leo.20210331221120.1">&lt;section data-transition="slide" data-background="#696969" data-background-transition="convex"&gt;
+    &lt;h1&gt;協同產品設計實習&lt;/h1&gt;
+    &lt;h2&gt;cd2021&lt;/h2&gt;
+    &lt;p&gt;
+        &lt;small&gt;Created by &lt;a href="https://github.com/40823245/stage1-bg1"&gt;40823245&lt;/a&gt;&lt;/small&gt;
+    &lt;/p&gt;
+&lt;/section&gt;
+
+</t>
 </tnodes>
 </leo_file>
