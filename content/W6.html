@@ -133,46 +133,10 @@ img.add_border {
           </div>
           
         </header>
-    <div id="tipue_search_content">W4 << <a href='W4.html'>Previous</a> <a href='後續.html'>Next</a> >> 後續<br /><h1>分組程式測試(待測試)</h1>
-<h4>開啟Redis、nodejs和ethercalc來測試程式</h4>
-<p><img alt="" height="300" src="./../images/etherecalc.png" width="500"/></p>
-<p>第一版本</p>
-<pre class="brush:html;auto-links:false;toolbar:false" contenteditable="false">#!/usr/bin/env python3
-import ethercalc
-import pprint
-import os
-
-proxy = 'http://192.168.0.139:8000'
-
-os.environ['http_proxy'] = proxy 
-os.environ['HTTP_PROXY'] = proxy
-os.environ['https_proxy'] = proxy
-os.environ['HTTPS_PROXY'] = proxy
-
-pp=pprint.PrettyPrinter(indent=4)
-e = ethercalc.EtherCalc("http://192.168.0.139:8000")
-
-pp.pprint(e.export("qv12b4lvl0hr"))</pre>
-<p>結果</p>
-<p><img alt="" height="300" src="./../images/group text.png" width="500"/></p>
-<p>第二版本</p>
-<pre class="brush:html;auto-links:false;toolbar:false" contenteditable="false">#!/usr/bin/env python3
-import ethercalc
-import pprint
-  
-pp = pprint.PrettyPrinter(indent=4)
-e = ethercalc.EtherCalc("http://192.168.0.139:8000")
-output = e.export("qv12b4lvl0hr")
-for i in range(len(output)):
-    #print(output[i])
-    # 設法除掉 None element
-    soutput = set(output[i])
-    print(soutput)</pre>
-<p>結果</p>
-<p><img alt="" height="300" src="./../images/group text-1.png" width="500"/></p>
-<p><a href="./../downloads/group test.txt">2b stage1測試名單</a></p>
-<h4>結論:<span>由上圖可知，我們能藉由Redis、Nodejs和ethercalc來跑人工分組的程式，但還是需要改善，可能有人沒有組別要加到別組或學號的跑程式問題。</span></h4>
-<br />W4 << <a href='W4.html'>Previous</a> <a href='後續.html'>Next</a> >> 後續</div>
+    <div id="tipue_search_content">stage2 << <a href='stage2.html'>Previous</a> <a href='筆記.html'>Next</a> >> 筆記<br /><h1>W6</h1>
+<h4>無法讓轉子和外殼做干涉</h4>
+<h4><a href="./../downloads/text2.rar">ttt檔</a></h4>
+<p><img alt="" height="500" src="./../images/text.gif" width="500"/></p><br />stage2 << <a href='stage2.html'>Previous</a> <a href='筆記.html'>Next</a> >> 筆記</div>
         
     <!-- footer -->
       <div class="container">
