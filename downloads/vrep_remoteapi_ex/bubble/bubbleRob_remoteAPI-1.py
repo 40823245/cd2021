@@ -5,7 +5,7 @@ import sys
  
 vrep.simxFinish(-1)
  
-clientID = vrep.simxStart('127.0.0.1', 19999, True, True, 5000, 5)
+clientID = vrep.simxStart('192.168.192.111', 19999, True, True, 5000, 5)
  
 if clientID!= -1:
     print("Connected to remote server")
