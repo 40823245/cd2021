@@ -12,6 +12,12 @@ if clientID!= -1:
 else:
     print('Connection not successful')
     sys.exit('Could not connect')
+    
+    res = vrep.simxAddStatusbarMessage(
+        clientID, "Hi!吉益",
+        vrep.simx_opmode_oneshot)
+    if res not in (vrep.simx_return_ok, vrep.simx_return_novalue_flag):
+        print("Could not add a message to the status bar.")
  
 errorCode,left_motor_handle=vrep.simxGetObjectHandle(clientID,'LBMotor',vrep.simx_opmode_oneshot_wait)
  
