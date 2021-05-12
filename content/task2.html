@@ -137,7 +137,7 @@ img.add_border {
 <h4>掃地機器人</h4>
 <h4><a href="./../downloads/text/text.ttt">測試1</a>(<a href="./../downloads/text/text.py">py檔</a>):用簡單的機構去試程式和理解運作</h4>
 <p><iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="allowfullscreen" frameborder="0" height="315" src="https://www.youtube.com/embed/Wj_cReL-f5c" title="YouTube video player" width="560"></iframe></p>
-<h4><a href="./../downloads/stage1/Sweeping robot-13.ttt">測試2</a>(<a href="./../downloads/stage1/Sweeping robot-11.py">py檔</a>):套用在掃地機器人，因速度設為0，所以一開始不會動</h4>
+<h4><a href="./../downloads/stage1/Sweeping robot-13.ttt">測試2</a>(<a href="./../downloads/stage1/Sweeping robot-10.py">py檔</a>):套用在掃地機器人，因速度設為0，所以一開始不會動，執行py檔後應像測試1一樣轉1圈，但不知是否模擬設定有問題，所以需要測試</h4>
 <p><iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="allowfullscreen" frameborder="0" height="315" src="https://www.youtube.com/embed/PYH3j8XgwGI" title="YouTube video player" width="560"></iframe></p>
 <h4><a href="./../downloads/text/text-1.ttt">測試3</a>(<a href="./../downloads/stage1/text-1.py">py檔</a>):簡化掃地機器人，看是否為設計問題</h4>
 <p><iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="allowfullscreen" frameborder="0" height="315" src="https://www.youtube.com/embed/pa2Ds_MFtNs" title="YouTube video player" width="560"></iframe></p>
@@ -232,7 +232,8 @@ class VrepLineFollower:
         vrep.simxSetJointTargetVelocity(self.clientID, self.leftJointDynamic,  t_left,  vrep.simx_opmode_oneshot_wait)
         vrep.simxSetJointTargetVelocity(self.clientID, self.rightJointDynamic, t_right, vrep.simx_opmode_oneshot_wait)
 </pre>
-<p></p>
+<p><img alt="" height="200" src="./../images/api-3.png" width="600"/></p>
+<p><img alt="" height="400" src="./../images/api-4.png" width="800"/></p>
 <p>鍵盤操作程式碼:</p>
 <pre class="brush:html;auto-links:false;toolbar:false" contenteditable="false">import sim as vrep
 import math
@@ -322,7 +323,11 @@ if clientID !=-1:
 else:
     print ('Failed connecting to  remote API server')
     print ('End')</pre>
-<p></p><br />task1 << <a href='task1.html'>Previous</a> <a href='筆記.html'>Next</a> >> 筆記</div>
+<p><img alt="" height="300" src="./../images/api.png" width="350"/></p>
+<p><img alt="" height="550" src="./../images/api-1.png" width="600"/></p>
+<p><img alt="" height="250" src="./../images/api-2.png" width="550"/></p>
+<h4>參考資料</h4>
+<h4><a href="http://mde.tw/cad2020/content/CoppeliaSim.html">網頁操作api</a>、<a href="https://ithelp.ithome.com.tw/articles/10224594">flask使用</a>、<a href="https://ithelp.ithome.com.tw/articles/10213468">render_template</a>、<a href="https://www.learncodewithmike.com/2020/01/python-class.html">物件導向</a>、<a href="http://kaiching.org/pydoing/py/python-return.html">def-return</a>、<a href="https://40823246.github.io/cd2021/content/task2.html">task2鍵盤操作</a></h4><br />task1 << <a href='task1.html'>Previous</a> <a href='筆記.html'>Next</a> >> 筆記</div>
         
     <!-- footer -->
       <div class="container">

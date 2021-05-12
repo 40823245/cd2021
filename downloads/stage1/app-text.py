@@ -1,14 +1,3 @@
-'''remoteApiConnections.txt file content:
-
-// Let's start a continuous remote API server service on port 19997:
-portIndex1_port             = 19997
-portIndex1_debug            = false
-portIndex1_syncSimTrigger   = true
-19998:
-portIndex2_port             = 19998
-portIndex2_debug            = false
-portIndex2_syncSimTrigger   = true
-'''
 from flask import Flask, render_template, redirect
 from vrep_linefollower import VrepLineFollower
 

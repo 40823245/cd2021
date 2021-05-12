@@ -14,7 +14,7 @@ else:
     sys.exit('Could not connect')
     
     res = vrep.simxAddStatusbarMessage(
-        clientID, "Hi!吉益",
+        clientID, "text",
         vrep.simx_opmode_oneshot)
     if res not in (vrep.simx_return_ok, vrep.simx_return_novalue_flag):
         print("Could not add a message to the status bar.")
