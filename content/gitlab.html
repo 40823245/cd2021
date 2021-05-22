@@ -133,34 +133,53 @@ img.add_border {
           </div>
           
         </header>
-    <div id="tipue_search_content">筆記 << <a href='筆記.html'>Previous</a> <a href='9443.html'>Next</a> >> 9443<br /><h1>建立網頁</h1>
-<h4><a href="https://github.com/mdecourse/cd2021/discussions/7">載點</a></h4>
-<h4>打開start_ipv4.bat<br/>確認版本</h4>
-<p><img alt="" height="50" src="./../images/python39.png" width="600"/></p>
-<p><img alt="" height="100" src="./../images/list.png" width="700"/></p>
-<p><img alt="" height="30" src="./../images/version.png" width="200"/></p>
-<h4>tmp新增git_ref資料夾並在裡面新增git_config.txt<br/>git_config.txt內容為git config --global http.proxy http://[2001:288:6004:17::69]:3128<br/>在home_ipv4新增.gitconfig<br/>.gitconfig內容為<br/>[http]<br/>#proxy = http://[2001:288:6004:17::69]:3128<br/>登入github帳號<br/>新增cd2021</h4>
-<p><img alt="" height="190" src="./../images/add.png" width="160"/></p>
-<p><img alt="" height="600" src="./../images/add-1.png" width="550"/></p>
-<h4>輸入指令(創資料夾)</h4>
-<pre class="brush:html;auto-links:false;toolbar:false" contenteditable="false">git clone https://github.com/40823245/cd2021.git</pre>
-<p><img alt="" height="100" src="./../images/clone.png" width="500"/></p>
-<h4>進到cd2021，輸入指令</h4>
-<pre class="brush:html;auto-links:false;toolbar:false" contenteditable="false">git submodule add https://github.com/mdecourse/cmsimde.git cmsimde</pre>
-<p><img alt="" height="150" src="./../images/cmsimde.png" width="600"/></p>
-<h4>進到cmsimde→up_dir，複製全部(ctrl+A→ctrl+C)</h4>
-<p><img alt="" height="500" src="./../images/cmsimde-1.png" width="600"/></p>
-<h4>貼到cd2021，會有重複的檔案<span style="color: #ff0000;">選擇第3個</span></h4>
-<p><img alt="" height="200" src="./../images/cmsimde-2.png" width="350"/></p>
-<p><img alt="" height="450" src="./../images/cmsimde-3.png" width="450"/></p>
-<p>進到cmsimde</p>
-<p><img alt="" height="20" src="./../images/enter.png" width="200"/></p>
-<h4>分別輸入pip install flask、pip install flask_cors、pip install lxml、pip install bs4、pip install markdown、pip install pelican、pip install leo指令<br/>載完後輸入python wsgi.py<br/>打開9443，登入(login)輸入密碼(admin)<br/>點config更改title(40823245 cd2021)<span style="color: #ff0000;">自己的學號</span><br/>做編輯，然後save→generate_pages<br/>進到cd2021<br/>git add .<br/>git config user.name "40823245"       <span style="color: #ff0000;">自己的學號</span><br/>git config user.email "40823245@gm.nfu.edu.tw"       <span style="color: #ff0000;">自己的信箱</span><br/>git commit -m "變更所做的標題"<br/>git push(學號和密碼)<br/>到倉儲，點setting</h4>
-<p><img alt="" height="150" src="./../images/setting.png" width="800"/></p>
-<h4>往下到github pages，更改成main→save</h4>
-<p><img alt="" height="300" src="./../images/github.png" width="550"/></p>
-<h4>回到倉儲看是否有出現黃球和綠勾</h4>
-<br />筆記 << <a href='筆記.html'>Previous</a> <a href='9443.html'>Next</a> >> 9443</div>
+    <div id="tipue_search_content">heroku << <a href='heroku.html'>Previous</a> <a href='網站影片.html'>Next</a> >> 網站影片<br /><h1>gitlab</h1>
+<h4><a href="https://gitlab.com/users/sign_up">創建gitlab帳號</a></h4>
+<h4>username:40823245</h4>
+<h4>email:40823245@gm.nfu.edu.tw</h4>
+<h4>新增空的倉儲</h4>
+<p><img alt="" height="200" src="./../images/gitlab.png" width="1000"/></p>
+<p><img alt="" height="400" src="./../images/gitlab-1.png" width="800"/></p>
+<h4>輸入要同步過來的倉儲名稱(我用stage3-bg1當例子)</h4>
+<h4>下面勾公開和不要有內建(空倉儲)</h4>
+<p><img alt="" height="500" src="./../images/gitlab-2.png" width="900"/></p>
+<h4>建完會看到下圖</h4>
+<p><img alt="" height="500" src="./../images/gitlab-3.png" width="700"/></p>
+<h4>在對應的資料夾輸入git branch確認主分支</h4>
+<p><img alt="" height="150" src="./../images/gitlab-4.png" width="400"/></p>
+<h4>如果無yml檔就建立，有yml檔就改(master→main)</h4>
+<p><img alt="" height="300" src="./../images/gitlab-5.png" width="300"/></p>
+<h4>yml程式碼(檔名要存yml)</h4>
+<pre class="brush:html;auto-links:false;toolbar:false" contenteditable="false">pages:
+  stage: deploy
+  script:
+  - mkdir .public
+  - cp -r * .public
+  - mv .public public
+  artifacts:
+    paths:
+    - public
+  only:
+  - main
+variables:
+  GIT_SUBMODULE_STRATEGY: recursive</pre>
+<h4>推推看</h4>
+<p><img alt="" height="350" src="./../images/gitlab-6.png" width="700"/></p>
+<h4>再檢查一次主分之</h4>
+<h4>git remote到gitlab</h4>
+<pre class="brush:html;auto-links:false;toolbar:false" contenteditable="false">git remote add gitlab https://gitlab.com/40823245/stage3-bg1.git</pre>
+<h4>推到gitlab</h4>
+<p><img alt="" height="200" src="./../images/gitlab-7.png" width="600"/></p>
+<h4>可以看到gitlab為下圖</h4>
+<p><img alt="" height="450" src="./../images/gitlab-8.png" width="800"/></p>
+<h4>commit紀錄都在</h4>
+<p><img alt="" height="400" src="./../images/gitlab-9.png" width="800"/></p>
+<h4>到設定找到gitlab同步後的網址</h4>
+<p><img alt="" height="600" src="./../images/gitlab-10.png" width="300"/></p>
+<h4>若沒顯示下圖請重整頁面，它需要時間轉</h4>
+<p><img alt="" height="500" src="./../images/gitlab-11.png" width="600"/></p>
+<h4>點連結可看到同步的頁面和網址</h4>
+<p><img alt="" height="600" src="./../images/gitlab-12.png" width="800"/></p><br />heroku << <a href='heroku.html'>Previous</a> <a href='網站影片.html'>Next</a> >> 網站影片</div>
         
     <!-- footer -->
       <div class="container">
