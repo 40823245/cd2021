@@ -4,85 +4,85 @@ xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitem
 xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
-<loc>https://40823245.github.io/cd2021/blog/</loc>
-<lastmod>2021-03-02T18:32:30-00:00</lastmod>
+<loc>https://40823245.gitlab.io/cd2021/blog/</loc>
+<lastmod>2021-05-30T20:22:55-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>https://40823245.github.io/cd2021/blog/archives.html</loc>
-<lastmod>2021-03-02T18:32:30-00:00</lastmod>
+<loc>https://40823245.gitlab.io/cd2021/blog/archives.html</loc>
+<lastmod>2021-05-30T20:22:55-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>https://40823245.github.io/cd2021/blog/tags.html</loc>
-<lastmod>2021-03-02T18:32:30-00:00</lastmod>
+<loc>https://40823245.gitlab.io/cd2021/blog/tags.html</loc>
+<lastmod>2021-05-30T20:22:55-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>https://40823245.github.io/cd2021/blog/categories.html</loc>
-<lastmod>2021-03-02T18:32:30-00:00</lastmod>
+<loc>https://40823245.gitlab.io/cd2021/blog/categories.html</loc>
+<lastmod>2021-05-30T20:22:55-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>https://40823245.github.io/cd2021/blog/pages/about/</loc>
-<lastmod>2021-02-27T08:06:28+08:00</lastmod>
+<loc>https://40823245.gitlab.io/cd2021/blog/pages/about/</loc>
+<lastmod>2021-03-12T22:41:28+08:00</lastmod>
 <changefreq>monthly</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>https://40823245.github.io/cd2021/blog/2021-Spring-Intro-to-computer-programming-1.html</loc>
-<lastmod>2021-03-02T18:31:48+08:00</lastmod>
+<loc>https://40823245.gitlab.io/cd2021/blog/2021-Spring-Intro-to-computer-programming-1.html</loc>
+<lastmod>2021-03-12T22:41:28+08:00</lastmod>
 <changefreq>monthly</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>https://40823245.github.io/cd2021/blog/2020-Fall-Intro-to-computer-programming.html</loc>
-<lastmod>2021-02-27T08:06:28+08:00</lastmod>
+<loc>https://40823245.gitlab.io/cd2021/blog/2020-Fall-Intro-to-computer-programming.html</loc>
+<lastmod>2021-03-12T22:41:28+08:00</lastmod>
 <changefreq>monthly</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>https://40823245.github.io/cd2021/blog/category/misc.html</loc>
-<lastmod>2021-03-02T18:31:48+08:06</lastmod>
+<loc>https://40823245.gitlab.io/cd2021/blog/category/misc.html</loc>
+<lastmod>2021-03-12T22:41:28+08:06</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>https://40823245.github.io/cd2021/blog/tag/2021springcd.html</loc>
-<lastmod>2021-03-02T18:31:48+08:06</lastmod>
+<loc>https://40823245.gitlab.io/cd2021/blog/tag/2021springcd.html</loc>
+<lastmod>2021-03-12T22:41:28+08:06</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>https://40823245.github.io/cd2021/blog/tag/2020fallcp.html</loc>
-<lastmod>2021-02-27T08:06:28+08:06</lastmod>
+<loc>https://40823245.gitlab.io/cd2021/blog/tag/2020fallcp.html</loc>
+<lastmod>2021-03-12T22:41:28+08:06</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>https://40823245.github.io/cd2021/blog/author/40823245.html</loc>
-<lastmod>2021-03-02T18:31:48+08:06</lastmod>
+<loc>https://40823245.gitlab.io/cd2021/blog/author/40823245.html</loc>
+<lastmod>2021-03-12T22:41:28+08:06</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>https://40823245.github.io/cd2021/blog/author/yen.html</loc>
-<lastmod>2021-02-27T08:06:28+08:06</lastmod>
+<loc>https://40823245.gitlab.io/cd2021/blog/author/yen.html</loc>
+<lastmod>2021-03-12T22:41:28+08:06</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
