@@ -785,7 +785,523 @@ else:
 <p><iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="allowfullscreen" frameborder="0" height="315" src="https://www.youtube.com/embed/eB8zY2WoxIk" title="YouTube video player" width="560"></iframe></p>
 <h4>第2部</h4>
 <p><iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="allowfullscreen" frameborder="0" height="315" src="https://www.youtube.com/embed/0Nv-B_NVE6k" title="YouTube video player" width="560"></iframe></p>
-<h1>筆記</h1>
+<h3>W16</h3>
+<p>取分項目1:onshape繪製</p>
+<p>版本1:<a href="https://cad.onshape.com/documents/fcb16d9b74184f7d9eac7c34/w/be501cc95d4c1c4aba995c7f/e/d8e61d79d3aa51c120008a0b">https://cad.onshape.com/documents/fcb16d9b74184f7d9eac7c34/w/be501cc95d4c1c4aba995c7f/e/d8e61d79d3aa51c120008a0b</a></p>
+<p>版本2:<a href="https://cad.onshape.com/documents/d75b32699663a3871190b17a/w/eb201e9cd932e2c39ae440e9/e/794848aec05ae709ca65bafb">https://cad.onshape.com/documents/d75b32699663a3871190b17a/w/eb201e9cd932e2c39ae440e9/e/794848aec05ae709ca65bafb</a></p>
+<p>影片</p>
+<p><iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="allowfullscreen" frameborder="0" height="315" src="https://www.youtube.com/embed/nTGKig62G44" title="YouTube video player" width="560"></iframe></p>
+<p>取分項目2:<span>用 Leo Editor 以 require 導入 Lua 程式運作</span></p>
+<p>google雲端:<a href="https://drive.google.com/file/d/1KTgPujWLU_rdoJhUcnIyeq0k34qDrnYl/view?usp=sharing">https://drive.google.com/file/d/1KTgPujWLU_rdoJhUcnIyeq0k34qDrnYl/view?usp=sharing</a></p>
+<p>程式碼(lua)</p>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">function sysCall_init() 
+    axis1=sim.getObjectHandle('MTB_axis1')
+    axis2=sim.getObjectHandle('MTB_axis2')
+    axis3=sim.getObjectHandle('MTB_axis3')
+    axis4=sim.getObjectHandle('MTB_axis4')
+    mtb3=sim.getObjectHandle('MTB_link3Respondable')
+    BaseFrame=sim.getObjectHandle("BaseFrame")
+    block =sim.getObjectHandle("block")
+    rotation1 = 0
+    rotation2 = 0
+    distance3 = 0
+    deg = math.pi/180
+end
+function sysCall_actuation() 
+    -- 吸盤往下降時, 直接貼在方塊頂部的校正值, 單位 m
+    -- 向下較正值為 4.2 mm
+    calibration = 0.0042
+    message, auxiliaryData=sim.getSimulatorMessage()
+        while message ~= -1 do
+            key=auxiliaryData[1]
+            sim.addStatusbarMessage('使用者按下 key:'..key)
+            if (message==sim.message_keypress) then
+
+                if (auxiliaryData[1]==97) then --r right turn in degree
+                    -- if key r pressed axis1 angle adds 5 degrees
+                     rotation1 = rotation1 + 5*deg
+                     sim.setJointPosition(axis1, rotation1)
+                end -- if r
+                if (auxiliaryData[1]==115) then --l left turn in degree
+                    -- if key l pressed axis1 angle substract 5 degrees
+                     rotation1 = rotation1 - 5*deg
+                     sim.setJointPosition(axis1, rotation1)
+                end -- if l
+                if (auxiliaryData[1]==122) then --r right turn in degree
+                    -- if key r pressed axis1 angle adds 5 degrees
+                     rotation2 = rotation2 + 5*deg
+                     sim.setJointPosition(axis2, rotation2)
+                end -- if r
+                if (auxiliaryData[1]==120) then --l left turn in degree
+                    -- if key l pressed axis1 angle substract 5 degrees
+                     rotation2 = rotation2 - 5*deg
+                     sim.setJointPosition(axis2, rotation2)
+                end -- if l
+
+           end  -- if
+    message, auxiliaryData=sim.getSimulatorMessage()
+        end -- while
+end -- function
+function sysCall_sensing() 
+--[[
+    -- Read Proximity sensor (0= nothing detected, 1 = object detected)
+    local res = sim.readProximitySensor(proximity)
+    -- Check if possible to insert an new box
+    if (sim.getSimulationTime()-T_last_inserted &gt; T_insert) and not hasStopped then
+        insertBox()
+    end
+    -- If proximity sensor detects an object, stop the belt, stop inserting objects
+    if res == 1 and not hasStopped then
+        if boolList[1] then
+            sim.setScriptSimulationParameter(sim.handle_self,"conveyorBeltVelocity",0)
+            deltaTime = sim.getSimulationTime()-T_last_inserted
+            hasStopped = true
+        else
+            local box = table.remove(boxList,1)
+            local boxDummy = table.remove(boxDummyList,1)
+            table.remove(boolList,1)
+            sim.removeObject(box)
+            sim.removeObject(boxDummy)
+        end
+    end
+    -- If proximity sensor detects nothing and belt has stopped, start belt, continue inserting
+    if res == 0 and hasStopped then
+        sim.setScriptSimulationParameter(sim.handle_self,"conveyorBeltVelocity",beltSpeed)
+        hasStopped = false
+        T_last_inserted = sim.getSimulationTime()-deltaTime
+    end
+    
+]]--
+end
+function sysCall_cleanup() 
+end 
+-- Convert a lua table into a lua syntactically correct string
+function table_to_string(tbl)
+    local result = "{"
+    for k, v in pairs(tbl) do
+        -- Check the key type (ignore any numerical keys - assume its an array)
+        if type(k) == "string" then
+            result = result.."[\""..k.."\"]".."="
+        end
+
+        -- Check the value type
+        if type(v) == "table" then
+            result = result..table_to_string(v)
+        elseif type(v) == "boolean" then
+            result = result..tostring(v)
+        else
+            v = round(v, 4)
+            result = result.."\""..v.."\""
+        end
+        result = result..","
+    end
+    -- Remove leading commas from the result
+    if result ~= "" then
+        result = result:sub(1, result:len()-1)
+    end
+    return result.."}"
+end
+function round(x, n)
+    n = math.pow(10, n or 0)
+    x = x * n
+    if x &gt;= 0 then x = math.floor(x + 0.5) else x = math.ceil(x - 0.5) end
+    return x / n
+end
+
+
+function insertBox()
+    -- Generate random numbers
+    local rand1 = math.random()
+    local rand2 = math.random()
+    local rand3 = math.random()
+    -- Generate random disturbances on position and orientation
+    local dx = (2*rand1-1)*0.1
+    local dy = (2*rand2-1)*0.1
+    local dphi = (2*rand3-1)*0.5
+    local disturbedCoordinates = {0,0,0}
+    disturbedCoordinates[1] = insertCoordinate[1]+dx
+    disturbedCoordinates[2] = insertCoordinate[2]+dy
+    disturbedCoordinates[3] = insertCoordinate[3]
+    -- Copy and paste box and boxDummy
+    local insertedObjects = sim.copyPasteObjects({box,boxDummy},0)
+    -- Update last inserted box time
+    T_last_inserted = sim.getSimulationTime()
+    -- Move and rotate
+    sim.setObjectPosition(insertedObjects[1],-1,disturbedCoordinates)
+    sim.setObjectOrientation(insertedObjects[1],-1,{0,0,dphi})
+    -- Store handles to boxes and dummies
+    table.insert(boxList,insertedObjects[1])
+    table.insert(boxDummyList,insertedObjects[2]) 
+    -- Decide if object is good or bad
+    local decision = math.random() 
+    if decision &lt;= goodPercentage then
+    -- Object is good, assign goodColor
+        sim.setShapeColor(insertedObjects[1],nil,sim.colorcomponent_ambient_diffuse,goodColor)
+        table.insert(boolList,true)
+    else
+    -- Object is bad, assign random color
+        sim.setShapeColor(insertedObjects[1],nil,sim.colorcomponent_ambient_diffuse,{rand1,rand2,rand3})
+        table.insert(boolList,false)
+    end
+end</pre>
+<p>影片</p>
+<p><iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="allowfullscreen" frameborder="0" height="315" src="https://www.youtube.com/embed/S2z2r54GoC8" title="YouTube video player" width="560"></iframe></p>
+<p>取分項目3:<span>末端接上 force sensor 後接上標準 suction pad </span></p>
+<p><a href="/downloads/W16-3.rar">檔案</a></p>
+<p>程式碼</p>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">function sysCall_init() 
+    axis1=sim.getObjectHandle('MTB_axis1')
+    axis2=sim.getObjectHandle('MTB_axis2')
+    axis3=sim.getObjectHandle('MTB_axis3')
+    axis4=sim.getObjectHandle('MTB_axis4')
+    mtb3=sim.getObjectHandle('MTB_link3Respondable')
+    suctionPad=sim.getObjectHandle('suctionPad')
+    BaseFrame=sim.getObjectHandle("BaseFrame")
+    block =sim.getObjectHandle("block")
+    rotation1 = 0
+    rotation2 = 0
+    distance3 = 0
+    deg = math.pi/180
+end
+function sysCall_actuation() 
+    -- 吸盤往下降時, 直接貼在方塊頂部的校正值, 單位 m
+    -- 向下較正值為 4.2 mm
+    calibration = 0.0042
+    message, auxiliaryData=sim.getSimulatorMessage()
+        while message ~= -1 do
+            key=auxiliaryData[1]
+            sim.addStatusbarMessage('使用者按下 key:'..key)
+            if (message==sim.message_keypress) then
+
+                if (auxiliaryData[1]==97) then --r right turn in degree
+                    -- if key r pressed axis1 angle adds 5 degrees
+                     rotation1 = rotation1 + 5*deg
+                     sim.setJointPosition(axis1, rotation1)
+                end -- if r
+                if (auxiliaryData[1]==115) then --l left turn in degree
+                    -- if key l pressed axis1 angle substract 5 degrees
+                     rotation1 = rotation1 - 5*deg
+                     sim.setJointPosition(axis1, rotation1)
+                end -- if l
+                if (auxiliaryData[1]==122) then --r right turn in degree
+                    -- if key r pressed axis1 angle adds 5 degrees
+                     rotation2 = rotation2 + 5*deg
+                     sim.setJointPosition(axis2, rotation2)
+                end -- if r
+                if (auxiliaryData[1]==120) then --l left turn in degree
+                    -- if key l pressed axis1 angle substract 5 degrees
+                     rotation2 = rotation2 - 5*deg
+                     sim.setJointPosition(axis2, rotation2)
+                end -- if l
+                if (auxiliaryData[1]==112) then --p activate the suction pad
+                    -- if key p pressed activate the suction mode
+            sim.setScriptSimulationParameter(sim.getScriptAssociatedWithObject(suctionPad),'active','true')
+                end -- if p
+                if (auxiliaryData[1]==113) then --q deactivate the suction pad
+                    -- if key q pressed deactivate the suction mode
+sim.setScriptSimulationParameter(sim.getScriptAssociatedWithObject(suctionPad),'active','false')
+                end -- if q
+                 if (auxiliaryData[1]==100) then --d suction pad down
+                    -- if key d pressed axis3 will down 0.01 m plus calibration
+                     distance3 = distance3 + 0.01 + calibration
+                     sim.setJointPosition(axis3, distance3)
+                end -- if d
+                if (auxiliaryData[1]==117) then --u suction pad up
+                    -- if key u pressed axis3 will up 0.01 m minus calibration
+                    -- 吸盤往下升 1 公分加上校正值
+                     distance3 = distance3 - 0.01 - calibration
+                     sim.setJointPosition(axis3, distance3)
+                end -- if u
+           end  -- if
+    message, auxiliaryData=sim.getSimulatorMessage()
+        end -- while
+end -- function
+function sysCall_sensing() 
+--[[
+    -- Read Proximity sensor (0= nothing detected, 1 = object detected)
+    local res = sim.readProximitySensor(proximity)
+    -- Check if possible to insert an new box
+    if (sim.getSimulationTime()-T_last_inserted &gt; T_insert) and not hasStopped then
+        insertBox()
+    end
+    -- If proximity sensor detects an object, stop the belt, stop inserting objects
+    if res == 1 and not hasStopped then
+        if boolList[1] then
+            sim.setScriptSimulationParameter(sim.handle_self,"conveyorBeltVelocity",0)
+            deltaTime = sim.getSimulationTime()-T_last_inserted
+            hasStopped = true
+        else
+            local box = table.remove(boxList,1)
+            local boxDummy = table.remove(boxDummyList,1)
+            table.remove(boolList,1)
+            sim.removeObject(box)
+            sim.removeObject(boxDummy)
+        end
+    end
+    -- If proximity sensor detects nothing and belt has stopped, start belt, continue inserting
+    if res == 0 and hasStopped then
+        sim.setScriptSimulationParameter(sim.handle_self,"conveyorBeltVelocity",beltSpeed)
+        hasStopped = false
+        T_last_inserted = sim.getSimulationTime()-deltaTime
+    end
+    
+]]--
+end
+function sysCall_cleanup() 
+end 
+-- Convert a lua table into a lua syntactically correct string
+function table_to_string(tbl)
+    local result = "{"
+    for k, v in pairs(tbl) do
+        -- Check the key type (ignore any numerical keys - assume its an array)
+        if type(k) == "string" then
+            result = result.."[\""..k.."\"]".."="
+        end
+
+        -- Check the value type
+        if type(v) == "table" then
+            result = result..table_to_string(v)
+        elseif type(v) == "boolean" then
+            result = result..tostring(v)
+        else
+            v = round(v, 4)
+            result = result.."\""..v.."\""
+        end
+        result = result..","
+    end
+    -- Remove leading commas from the result
+    if result ~= "" then
+        result = result:sub(1, result:len()-1)
+    end
+    return result.."}"
+end
+function round(x, n)
+    n = math.pow(10, n or 0)
+    x = x * n
+    if x &gt;= 0 then x = math.floor(x + 0.5) else x = math.ceil(x - 0.5) end
+    return x / n
+end
+
+
+function insertBox()
+    -- Generate random numbers
+    local rand1 = math.random()
+    local rand2 = math.random()
+    local rand3 = math.random()
+    -- Generate random disturbances on position and orientation
+    local dx = (2*rand1-1)*0.1
+    local dy = (2*rand2-1)*0.1
+    local dphi = (2*rand3-1)*0.5
+    local disturbedCoordinates = {0,0,0}
+    disturbedCoordinates[1] = insertCoordinate[1]+dx
+    disturbedCoordinates[2] = insertCoordinate[2]+dy
+    disturbedCoordinates[3] = insertCoordinate[3]
+    -- Copy and paste box and boxDummy
+    local insertedObjects = sim.copyPasteObjects({box,boxDummy},0)
+    -- Update last inserted box time
+    T_last_inserted = sim.getSimulationTime()
+    -- Move and rotate
+    sim.setObjectPosition(insertedObjects[1],-1,disturbedCoordinates)
+    sim.setObjectOrientation(insertedObjects[1],-1,{0,0,dphi})
+    -- Store handles to boxes and dummies
+    table.insert(boxList,insertedObjects[1])
+    table.insert(boxDummyList,insertedObjects[2]) 
+    -- Decide if object is good or bad
+    local decision = math.random() 
+    if decision &lt;= goodPercentage then
+    -- Object is good, assign goodColor
+        sim.setShapeColor(insertedObjects[1],nil,sim.colorcomponent_ambient_diffuse,goodColor)
+        table.insert(boolList,true)
+    else
+    -- Object is bad, assign random color
+        sim.setShapeColor(insertedObjects[1],nil,sim.colorcomponent_ambient_diffuse,{rand1,rand2,rand3})
+        table.insert(boolList,false)
+    end
+end</pre>
+<p>影片</p>
+<p><iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="allowfullscreen" frameborder="0" height="315" src="https://www.youtube.com/embed/7EqQ5y5Kq1Y" title="YouTube video player" width="560"></iframe></p>
+<p>取分項目4:<span>以程式指定方塊取放之兩個位置 - (0.2, 0.7, 0.05) 與 (-0.3, -0.55, 0.05)</span></p>
+<p><a href="/downloads/W16-4.rar">檔案</a></p>
+<p>程式碼(lua)</p>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">function move(x,y)
+     a=0.4
+     b=0.4
+     c=math.pow((math.pow(x,2)+math.pow(y,2)),0.5)
+     --c=a+b
+     s=(a+b+c)/2
+     --
+     area=math.pow((s*(s-a)*(s-b)*(s-c)),0.5)
+     --
+     h=area/(2*c)
+     --
+     deg1_base=math.atan(x/y)
+     --
+     if x&lt;0 and y&lt;0 then
+          deg1_base=deg1_base+math.pi
+     end
+     --
+     deg1_tri=math.asin(h/a)
+     deg1=deg1_base+deg1_tri
+     --
+     deg2=math.pi-(0.5*math.pi-deg1_tri)-math.acos(h/b)
+     --
+     deg3=deg2-deg1
+     --
+     print(deg1)
+     
+     sim.setJointTargetPosition(joint,deg1)
+     sim.setJointTargetPosition(joint1,-deg2)
+     sim.setJointTargetPosition(joint2,deg3)
+end
+
+function sysCall_threadmain()
+     t=3
+     joint=sim.getObjectHandle('joint')
+     joint1=sim.getObjectHandle('joint1')
+     joint2=sim.getObjectHandle('joint2')
+     joint0=sim.getObjectHandle('joint0')
+     --joint setting
+     sim.setJointTargetPosition(joint,0)
+     sim.setJointTargetPosition(joint1,0)
+     sim.setJointTargetPosition(joint2,0)
+     sim.setJointTargetPosition(joint0,0)
+     --joint position
+     sim.wait(t)
+     sim.wait(t)
+     sim.setIntegerSignal("pad_switch",1)
+     --suctionPad setting
+     sim.setJointTargetPosition(joint0,-0.04)
+     --suctionPad down
+     sim.wait(t)
+     --wait 2 seconds
+     sim.setJointTargetPosition(joint0,0)
+     --suctionPad up
+     sim.wait(t)
+     while sim.getSimulationState()~=sim.simulation_advancing_abouttostop do
+        move(0.2,0.7)
+        --move to (0.2,0.7)
+        sim.wait(t)
+        sim.setIntegerSignal("pad_switch",0)
+        sim.wait(t)
+        sim.setIntegerSignal("pad_switch",1)
+        sim.setJointTargetPosition(joint0,-0.04)
+        sim.wait(t)
+        sim.setJointTargetPosition(joint0,0)
+        sim.wait(t)
+        --Suck and release
+        move(-0.3,-0.55)
+        --move to (-0.3,0.55)
+        sim.wait(t)
+        sim.setIntegerSignal("pad_switch",0)
+        sim.wait(t)
+        sim.setIntegerSignal("pad_switch",1)
+        sim.setJointTargetPosition(joint0,-0.04)
+        sim.wait(t)
+        sim.setJointTargetPosition(joint0,0)
+        sim.wait(t)
+        --Suck and release
+     end
+end
+
+function sysCall_cleanup()
+    -- Put some clean-up code here
+end
+
+-- See the user manual or the available code snippets for additional callback functions and details
+</pre>
+<p>影片</p>
+<p><iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="allowfullscreen" frameborder="0" height="315" src="https://www.youtube.com/embed/8KAs1q34Q9A" title="YouTube video player" width="560"></iframe></p>
+<p>取分項目5:<span>用 Python remote API 程式重現以迴圈方式執行 W15 兩個指定位置之方塊取放</span></p>
+<p><a href="/downloads/W16-5.rar">檔案</a></p>
+<p>程式碼(api)</p>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">import sim as vrep
+import math
+import random
+import time
+import math
+ 
+def move(x,y):
+        a=0.4
+        b=0.4
+        c=math.pow((math.pow(x,2)+math.pow(y,2)),0.5)
+        
+        s=(a+b+c)/2
+        
+        area=math.pow((s*(s-a)*(s-b)*(s-c)),0.5)
+        
+        h=area/(2*c)
+        
+        deg1_base=math.atan(x/y)
+        
+        if x&lt;0 and y&lt;0 :
+            deg1_base=deg1_base+math.pi
+
+        deg1_tri=math.asin(h/a)
+        deg1=deg1_base+deg1_tri
+        
+        deg2=math.pi-(0.5*math.pi-deg1_tri)-math.acos(h/b)
+        
+        deg3=deg2-deg1
+        
+        vrep.simxSetJointTargetPosition(clientID,joint,deg1,opmode)
+        vrep.simxSetJointTargetPosition(clientID,joint1,-deg2,opmode)
+        vrep.simxSetJointTargetPosition(clientID,joint2,deg3,opmode)
+         
+ 
+print ('Start')
+  
+vrep.simxFinish(-1)
+  
+clientID = vrep.simxStart('127.0.0.1', 19997, True, True, 5000, 5)
+ 
+if clientID != -1:
+    print ('Connected to remote API server')
+ 
+    res = vrep.simxAddStatusbarMessage(
+        clientID, "W16",
+        vrep.simx_opmode_oneshot)
+    if res not in (vrep.simx_return_ok, vrep.simx_return_novalue_flag):
+        print("Could not add a message to the status bar.")
+ 
+ 
+    opmode = vrep.simx_opmode_oneshot_wait
+    STREAMING = vrep.simx_opmode_streaming
+ 
+ 
+    vrep.simxStartSimulation(clientID, opmode)
+    ret,joint=vrep.simxGetObjectHandle(clientID,"joint",opmode)
+    ret,joint1=vrep.simxGetObjectHandle(clientID,"joint1",opmode)
+    ret,joint2=vrep.simxGetObjectHandle(clientID,"joint2",opmode)
+    ret,joint0=vrep.simxGetObjectHandle(clientID,"joint0",opmode)
+     
+    vrep.simxSetJointTargetPosition(clientID,joint,0,opmode)
+    vrep.simxSetJointTargetPosition(clientID,joint1,0,opmode)
+    vrep.simxSetJointTargetPosition(clientID,joint2,0,opmode)
+    time.sleep(1)
+    vrep.simxSetIntegerSignal(clientID,"pad_switch",1,opmode)
+    vrep.simxSetJointTargetPosition(clientID,joint0,-0.045,opmode)
+    time.sleep(1)
+    vrep.simxSetJointTargetPosition(clientID,joint0,0,opmode)
+    while True:
+        move(0.2,0.7)
+        time.sleep(1)
+        vrep.simxSetIntegerSignal(clientID,"pad_switch",0,opmode)
+        time.sleep(1)
+        vrep.simxSetIntegerSignal(clientID,"pad_switch",1,opmode)
+        time.sleep(1)
+        vrep.simxSetJointTargetPosition(clientID,joint0,-0.045,opmode)
+        time.sleep(1)
+        vrep.simxSetJointTargetPosition(clientID,joint0,0,opmode)
+        move(-0.3,-0.55)
+        time.sleep(1)
+        vrep.simxSetIntegerSignal(clientID,"pad_switch",0,opmode)
+        time.sleep(1)
+        vrep.simxSetIntegerSignal(clientID,"pad_switch",1,opmode)
+        time.sleep(1)
+        vrep.simxSetJointTargetPosition(clientID,joint0,-0.045,opmode)
+        time.sleep(1)
+        vrep.simxSetJointTargetPosition(clientID,joint0,0,opmode)</pre>
+<p><iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="allowfullscreen" frameborder="0" height="315" src="https://www.youtube.com/embed/tsgXEk2am8c" title="YouTube video player" width="560"></iframe></p><h1>筆記</h1>
 <h4>2019~2021所用到的指令、步驟等</h4>
 <h2>建立網頁</h2>
 <h4><a href="https://github.com/mdecourse/cd2021/discussions/7">載點</a></h4>
@@ -1081,36 +1597,37 @@ variables:
 <p><span style="color: #000000;"><img alt="" height="150" src="/images/gogs-2.png" width="450"/></span></p>
 <h4><span style="color: #000000;">回到gogs重整可以看到資料同步過去</span></h4>
 <h2>fossil</h2>
-<p>下載fossil:<a href="https://fossil-scm.org/home/uv/download.html">https://fossil-scm.org/home/uv/download.html</a></p>
-<p>載64位元的</p>
-<p>登入fossil:<a data-saferedirecturl="https://www.google.com/url?q=https://fossil.kmol.info/u/cda&amp;source=gmail&amp;ust=1623492641714000&amp;usg=AFQjCNGlsg9vdoqrjFgWdDEmRJ4Y-wSNPQ" href="https://fossil.kmol.info/u/cda" target="_blank">https://fossil.kmol.info/u/cda</a></p>
-<p>在tmp創fossil</p>
-<p>進到fossil</p>
-<p>clone檔案(自己改為自己的)</p>
+<h4>下載fossil:<a href="https://fossil-scm.org/home/uv/download.html">https://fossil-scm.org/home/uv/download.html</a></h4>
+<h4>載64位元的</h4>
+<h4>登入fossil:<a data-saferedirecturl="https://www.google.com/url?q=https://fossil.kmol.info/u/cda&amp;source=gmail&amp;ust=1623492641714000&amp;usg=AFQjCNGlsg9vdoqrjFgWdDEmRJ4Y-wSNPQ" href="https://fossil.kmol.info/u/cda" target="_blank">https://fossil.kmol.info/u/cda</a></h4>
+<h4>在tmp創fossil</h4>
+<h4>進到fossil</h4>
+<h4>clone檔案(自己改為自己的)</h4>
 <pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">fossil clone https://40823245@fossil.kmol.info/u/40823245 40823245.fossil</pre>
-<p>打密碼(email的)</p>
-<p>輸入y→enter</p>
-<p><span>y→enter</span></p>
-<p><span>y→enter</span></p>
+<h4>打密碼(email的)</h4>
+<h4>輸入y→enter</h4>
+<h4><span>y→enter</span></h4>
+<h4><span>y→enter</span></h4>
 <p><img alt="" height="300" src="/images/fossil.png" width="650"/></p>
-<p>會看到下圖多了40823245.fossil</p>
+<h4>會看到下圖多了40823245.fossil</h4>
 <p><img alt="" height="150" src="/images/fossil-5.png" width="550"/></p>
-<p>創wd和40823245(自己的學號)資料夾</p>
-<p>進到wd/40823245<span>(自己的學號)</span></p>
-<p>打開fossil</p>
+<h4>創wd和40823245(自己的學號)資料夾</h4>
+<h4>進到wd/40823245<span>(自己的學號)</span></h4>
+<h4>打開fossil</h4>
 <pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">fossil open ./../../40823245.fossil</pre>
 <p><img alt="" height="150" src="/images/fossil-1.png" width="550"/></p>
-<p>會看到_FOSSIL_的檔</p>
+<h4>會看到_FOSSIL_的檔</h4>
 <p><img alt="" height="500" src="/images/fossil-2.png" width="650"/></p>
-<p>再把原本cd2021的資料全部複製進來</p>
-<p>fossil add .</p>
-<p>fossil commit -m "add cd2021 content files"</p>
-<p>輸入a→enter</p>
+<h4>再把原本cd2021的資料全部複製進來</h4>
+<h4>fossil add .</h4>
+<h4>fossil commit -m "add cd2021 content files"</h4>
+<h4>輸入a→enter</h4>
 <p><img alt="" height="150" src="/images/fossil-6.png" width="650"/></p>
-<p>可在<a href="https://fossil.kmol.info/u/40823245/doc/trunk/content/index.html">https://fossil.kmol.info/u/40823245/doc/trunk/content/index.html</a>看到網頁</p>
+<h4>可在<a href="https://fossil.kmol.info/u/40823245/doc/trunk/content/index.html">https://fossil.kmol.info/u/40823245/doc/trunk/content/index.html</a>看到網頁</h4>
 <p><img alt="" height="600" src="/images/fossil-4.png" width="700"/></p>
-<p>可在<a href="https://fossil.kmol.info/u/40823245/dir?ci=tip">https://fossil.kmol.info/u/40823245/dir?ci=tip</a>看到東西</p>
-<p><img alt="" height="450" src="/images/fossil-3.png" width="750"/></p><h1>網站影片</h1>
+<h4>可在<a href="https://fossil.kmol.info/u/40823245/dir?ci=tip">https://fossil.kmol.info/u/40823245/dir?ci=tip</a>看到東西</h4>
+<p><img alt="" height="450" src="/images/fossil-3.png" width="750"/></p>
+<h1>網站影片</h1>
 <h4>每週個人所做的結果錄製</h4>
 <h4>個人</h4>
 <h4>第一周</h4>
